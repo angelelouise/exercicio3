@@ -4,8 +4,19 @@ import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
+    private ArrayList<String> tweets = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +28,25 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("ciclovida", "onCreate");
+
+        if(savedInstanceState != null){
+            tweets = (ArrayList<String>) savedInstanceState.getSerializable("tweets");
+        }
+        //referenciando o listview
+        ListView tweetlogs = (ListView) findViewById(R.id.list_log_twt);
+        //fazendo a ligação da lista criada ao adapter (this, estilo da lista, arraylist)
+        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, tweets);
+        //fazendo a conexão do listview ao adapter
+        tweetlogs.setAdapter(adapter);
     }
-    /*protected void onSaveInstanceState (Bundle outState ){
-    }*/
+    /*
+    Método para recuperar dados no momento que o android destroy a aplicação
+     */
+    protected void onSaveInstanceState (Bundle outState ){
+        super.onSaveInstanceState(outState);
+        //identifico o que eu quero salvar, nesse caso é a lista de tweets
+        outState.putSerializable("tweets", tweets);
+    }
 
     @Override
     protected void onStart() {
@@ -87,4 +114,21 @@ public class MainActivity extends Activity {
         Log.d("ciclovida", "onDestroy");
     }
 
+    public void twettar (View v){
+
+        EditText tweettext = (EditText) findViewById(R.id.text_twt);
+        //EditText log_twt = (EditText) findViewById(R.id.log_twt); Para quando se usa um MultText
+        String tweet = tweettext.getText().toString();
+        tweets.add(tweet);
+        /*
+        Para quando se usa um MultText
+        String tweetlog = log_twt.getText().toString();
+        tweetlog = tweet +"\n" + tweetlog;
+        log_twt.setText(tweetlog);
+        */
+        //notifica o adapter quando houve mudanças devido ao chamado do método
+        adapter.notifyDataSetChanged();
+        tweettext.setText(""); //limpa o campo de texto.
+
+    }
 }
