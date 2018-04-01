@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -37,6 +38,8 @@ public class MainActivity extends Activity {
         if(savedInstanceState != null){
             //tweets = (ArrayList<String>) savedInstanceState.getSerializable("tweets");
             tweets = (ArrayList<Tweet>) savedInstanceState.getSerializable("tweets");
+            /*Returns the value associated with the given key, or null if no mapping of the desired
+            type exists for the given key or a null value is explicitly associated with the key. */
         }
         //referenciando o listview
         ListView tweetlogs = (ListView) findViewById(R.id.list_log_twt);
@@ -44,7 +47,7 @@ public class MainActivity extends Activity {
         adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, tweets);
         //fazendo a conexão do listview ao adapter
         tweetlogs.setAdapter(adapter);
-
+        //listener para cliques
         tweetlogs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,9 +137,8 @@ public class MainActivity extends Activity {
         EditText tweettext = (EditText) findViewById(R.id.text_twt);
         //Pegando o conteúdo digitado
         String tweet = tweettext.getText().toString();
-        Tweet twt = new Tweet();
-        twt.setTexto(tweet);
-        twt.setAutor("Angele");
+
+        Tweet twt = new Tweet(tweet,"Angele", new Date());
 
         //Adicionando a lista
         tweets.add(twt);

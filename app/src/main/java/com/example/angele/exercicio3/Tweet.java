@@ -13,10 +13,17 @@ public class Tweet {
 
     private String texto;
     private String autor;
-    private Date data = new Date();
+    private Date data;
 
+    //construtor para criar uma instancia
+    public Tweet(String texto, String autor, Date data){
+        this.data=data;
+        this.texto=texto;
+        this.autor=autor;
+
+    }
     @Override
-    public String toString() {
+    public String toString() { //
         String content = texto + "\n" + autor +"\n" + data;
         return content;
     }
