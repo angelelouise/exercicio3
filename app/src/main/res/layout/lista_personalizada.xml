@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/lista_autor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#9B30FF"
             android:text="Autor"
+            android:textColor="#FFFFF0"
             android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/lista_texto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="O que você está pensando?"
-            android:textSize="20dp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/lista_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#9B30FF"
+            android:text="Data"
+            android:textAlignment="textEnd"
+            android:textColor="#FFFFF0" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/lista_texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#AB82FF"
+            android:text="O que você está pensando?"
+            android:textColor="#FFFFF0"
+            android:textSize="20dp" />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

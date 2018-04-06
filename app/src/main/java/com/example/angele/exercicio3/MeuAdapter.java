@@ -47,7 +47,7 @@ public class MeuAdapter extends ArrayAdapter<Tweet>{
 
         autor.setText(tweet_atual.getAutor());
         texto.setText(tweet_atual.getTexto());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/aaaa");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String data_aux= sdf.format(tweet_atual.getData());
         data.setText(data_aux);
 
