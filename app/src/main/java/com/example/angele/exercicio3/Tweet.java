@@ -1,5 +1,6 @@
 package com.example.angele.exercicio3;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
  * data
  */
 
-public class Tweet {
+public class Tweet implements Serializable{
 
     private String texto;
     private String autor;

@@ -25,6 +25,7 @@ public class MeuAdapter extends ArrayAdapter<Tweet>{
     private Context mContext;
     private List<Tweet> mTweet = new ArrayList<>();
 
+    //construtor
     public MeuAdapter(@NonNull Context context, @SuppressLint("SupportAnnotationUsage") @LayoutRes ArrayList<Tweet> list) {
         super(context, 0,list);
         mContext=context;
@@ -40,7 +41,6 @@ public class MeuAdapter extends ArrayAdapter<Tweet>{
             listarTweets = LayoutInflater.from(mContext).inflate(R.layout.lista_personalizada, parent, false);
         Tweet tweet_atual= mTweet.get(position);
 
-        ListView tweetlogs = (ListView) listarTweets.findViewById(R.id.list_log_twt);
         TextView autor = (TextView) listarTweets.findViewById(R.id.lista_autor);
         TextView texto = (TextView) listarTweets.findViewById(R.id.lista_texto);
         TextView data = (TextView) listarTweets.findViewById(R.id.lista_data);
