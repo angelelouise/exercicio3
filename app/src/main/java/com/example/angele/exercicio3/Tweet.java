@@ -36,7 +36,7 @@ public class Tweet {
     }
 
     public Date getData() {
-        return data;
+        return  data;
     }
 
     public String getTexto() {

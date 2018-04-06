@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">exercicio3</string>
+    <string name="title_activity_lista_personalizada">lista_personalizada</string>
 </resources>

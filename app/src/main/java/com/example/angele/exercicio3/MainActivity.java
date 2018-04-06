@@ -22,7 +22,8 @@ public class MainActivity extends Activity {
     //private ArrayAdapter<String> adapter;
 
     private ArrayList<Tweet> tweets = new ArrayList<>();
-    private ArrayAdapter<Tweet> adapter;
+    //private ArrayAdapter<Tweet> adapter;
+    private MeuAdapter adapter; //implementando um adapter customizado
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,8 @@ public class MainActivity extends Activity {
         //referenciando o listview
         ListView tweetlogs = (ListView) findViewById(R.id.list_log_twt);
         //fazendo a ligação da lista criada ao adapter (this, estilo da lista, arraylist)
-        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, tweets);
+        //adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, tweets);
+        adapter = new MeuAdapter(getApplicationContext(),tweets);//utilizando meu adapter, precisa do contexto e da lista de arrays
         //fazendo a conexão do listview ao adapter
         tweetlogs.setAdapter(adapter);
         //listener para cliques
@@ -132,7 +134,7 @@ public class MainActivity extends Activity {
         Log.d("ciclovida", "onDestroy");
     }
 
-    public void twettar (View v){
+    public void tweetar (View v){
         //refereciando o multtext que recebe os dados
         EditText tweettext = (EditText) findViewById(R.id.text_twt);
         //Pegando o conteúdo digitado
