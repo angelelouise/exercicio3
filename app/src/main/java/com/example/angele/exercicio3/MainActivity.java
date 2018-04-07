@@ -1,23 +1,21 @@
 package com.example.angele.exercicio3;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 public class MainActivity extends Activity {
     //private ArrayList<String> tweets = new ArrayList<>();
@@ -25,7 +23,10 @@ public class MainActivity extends Activity {
     private ArrayList<Tweet> tweets = new ArrayList<>();
     //private ArrayAdapter<Tweet> adapter;
     private MeuAdapter adapter; //implementando um adapter customizado
+    protected static final int EDITAR = 0;
+    protected static final int FOTO = 1;
 
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,63 @@ public class MainActivity extends Activity {
             }
         });
 
+        tweetlogs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int position, long arg3) {
+                Tweet tweetSelecionado = tweets.get(position);
+
+                Intent editartweet = new Intent(MainActivity.this, edit_tweet.class);
+
+                editartweet.putExtra(Tweet.TWEET_INFO, tweetSelecionado);
+
+                startActivityForResult(editartweet, EDITAR);
+                return true;
+            }
+        });
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case EDITAR:
+                if (resultCode == RESULT_OK) {
+                    Tweet tweet = (Tweet) data
+                            .getSerializableExtra(Tweet.TWEET_INFO);
+
+                    tweets.remove(tweet);
+                    tweets.add(tweet);
+
+                    adapter.notifyDataSetChanged();
+                }
+
+                break;
+
+            case FOTO:
+                if (resultCode == RESULT_OK) {
+                    alterarFoto(data);
+                }
+
+                break;
+
+            default:
+                break;
+        }
+    }
+    private void alterarFoto(Intent data) {
+        ImageView imgView = (ImageView) findViewById(R.id.imageView);
+
+        bitmap = (Bitmap) data.getExtras().get("data");
+        imgView.setImageBitmap(bitmap);
+    }
+
+
+
+    public void tirarFoto(View v) {
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        startActivityForResult(camera, FOTO);
     }
     /*
     Método para recuperar dados no momento que o android destroy a aplicação

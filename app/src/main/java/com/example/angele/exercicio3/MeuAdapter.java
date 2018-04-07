@@ -34,13 +34,13 @@ public class MeuAdapter extends ArrayAdapter<Tweet>{
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listarTweets = convertView;
+        //listarTweets.setLongClickable(true);
 
         //If convertView == null then the view should be inflated
         if (listarTweets==null)
             listarTweets = LayoutInflater.from(mContext).inflate(R.layout.lista_personalizada, parent, false);
         Tweet tweet_atual= mTweet.get(position);
 
-        ListView tweetlogs = (ListView) listarTweets.findViewById(R.id.list_log_twt);
         TextView autor = (TextView) listarTweets.findViewById(R.id.lista_autor);
         TextView texto = (TextView) listarTweets.findViewById(R.id.lista_texto);
         TextView data = (TextView) listarTweets.findViewById(R.id.lista_data);
