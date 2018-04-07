@@ -1,16 +1,24 @@
 package com.example.angele.exercicio3;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,8 +74,8 @@ public class MainActivity extends Activity {
 
             }
         });
-
-        tweetlogs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        registerForContextMenu(tweetlogs);
+        /*tweetlogs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int position, long arg3) {
@@ -80,7 +88,7 @@ public class MainActivity extends Activity {
                 startActivityForResult(editartweet, EDITAR);
                 return true;
             }
-        });
+        });*/
 
     }
     @Override
@@ -91,7 +99,7 @@ public class MainActivity extends Activity {
                 if (resultCode == RESULT_OK) {
                     Tweet tweet = (Tweet) data
                             .getSerializableExtra(Tweet.TWEET_INFO);
-
+//melhorar isso aqui
                     tweets.remove(tweet);
                     tweets.add(tweet);
 
@@ -125,9 +133,77 @@ public class MainActivity extends Activity {
 
         startActivityForResult(camera, FOTO);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        // return true so that the menu pop up is opened
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                Toast toast = Toast.makeText(MainActivity.this, "Item Selecionado",Toast.LENGTH_LONG);
+                toast.show();
+                return true;
+            case R.id.Logout:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.menu_tweet,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final Tweet tweetSelecionado = adapter.getItem(info.position);
+        int i = info.position;
+
+        switch (item.getItemId()){
+            case R.id.editar:
+                Intent editartweet = new Intent(MainActivity.this, edit_tweet.class);
+                editartweet.putExtra(Tweet.TWEET_INFO, tweetSelecionado);
+                startActivityForResult(editartweet, EDITAR);
+                break;
+            case R.id.remover:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setMessage("O tweet será excluido, deseja prosseguir?").setCancelable(false)
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                tweets.remove(tweetSelecionado);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+                break;
+            default:
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
     /*
-    Método para recuperar dados no momento que o android destroy a aplicação
-     */
+            Método para recuperar dados no momento que o android destroy a aplicação
+             */
     protected void onSaveInstanceState (Bundle outState ){
         super.onSaveInstanceState(outState);
         //identifico o que eu quero salvar, nesse caso é a lista de tweets

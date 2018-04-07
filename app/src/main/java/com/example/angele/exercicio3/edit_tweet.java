@@ -1,6 +1,8 @@
 package com.example.angele.exercicio3;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,11 +35,26 @@ public class edit_tweet extends Activity {
     public void salvar (View view){
         tweet.setTexto(edit_tweet.getText().toString());
 
-        Intent result = new Intent();
-        result.putExtra(Tweet.TWEET_INFO, tweet);
+        final Intent resultado = new Intent();
 
-        setResult(RESULT_OK, result);
-        finish();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("O tweet será atualizado, deseja prosseguir?").setCancelable(false)
+        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                resultado.putExtra(Tweet.TWEET_INFO, tweet);
+                setResult(RESULT_OK, resultado);
+                finish();
+            }
+        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
 
     }
 }
