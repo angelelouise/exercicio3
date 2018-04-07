@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 
 public class detalhes_tweet extends Activity {
+    Tweet tweet;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_tweet);
@@ -36,7 +38,7 @@ public class detalhes_tweet extends Activity {
         TextView detalhes_data = (TextView) findViewById(R.id.detalhes_data);
 
         Intent intent = getIntent();
-        final Tweet tweet = (Tweet) intent.getExtras().get(Tweet.TWEET_INFO);
+        tweet = (Tweet) intent.getExtras().get(Tweet.TWEET_INFO);
 
         detalhes_autor.setText(tweet.getAutor().getNome());
         detalhes_email.setText(tweet.getAutor().getEmail());
@@ -44,26 +46,19 @@ public class detalhes_tweet extends Activity {
         detalhes_texto.setText(tweet.getTexto());
         detalhes_data.setText(tweet.getData().toGMTString());
 
-        detalhes_telefone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(tweet.getAutor().getTelefone()));
-
-                if (ActivityCompat.checkSelfPermission(detalhes_tweet.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                startActivity(intent);
-            }
-        });
     }
+    public void telefonar(View v){
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        callIntent.setData(Uri.parse("tel:" + tweet.getAutor().getTelefone()));
 
+        if (checkSelfPermission(android.Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        startActivity(callIntent);
+    }
     public void Voltar(View v){
        finish();
     }
