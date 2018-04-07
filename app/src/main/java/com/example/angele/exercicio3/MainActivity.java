@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
     private MeuAdapter adapter; //implementando um adapter customizado
     protected static final int EDITAR = 0;
     protected static final int FOTO = 1;
-
+    private int i;
     private Bitmap bitmap;
 
     @Override
@@ -99,9 +99,9 @@ public class MainActivity extends Activity {
                 if (resultCode == RESULT_OK) {
                     Tweet tweet = (Tweet) data
                             .getSerializableExtra(Tweet.TWEET_INFO);
-//melhorar isso aqui
-                    tweets.remove(tweet);
-                    tweets.add(tweet);
+
+                    tweets.remove(i);
+                    tweets.add(i,tweet);
 
                     adapter.notifyDataSetChanged();
                 }
@@ -118,6 +118,7 @@ public class MainActivity extends Activity {
             default:
                 break;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
     private void alterarFoto(Intent data) {
         ImageView imgView = (ImageView) findViewById(R.id.imageView);
@@ -169,7 +170,7 @@ public class MainActivity extends Activity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         final Tweet tweetSelecionado = adapter.getItem(info.position);
-        int i = info.position;
+        i = info.position;
 
         switch (item.getItemId()){
             case R.id.editar:

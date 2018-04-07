@@ -10,9 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN_Act" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -28,7 +36,7 @@
 
         <activity android:name=".edit_tweet">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.EDIT_TWEET" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
