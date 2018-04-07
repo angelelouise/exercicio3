@@ -12,12 +12,14 @@ import java.util.Date;
 
 public class Tweet implements Serializable{
 
+    public static final String TWEET_INFO = "TWEET_INFO";
     private String texto;
-    private String autor;
+    //private String autor;
+    private Autor autor;
     private Date data;
 
     //construtor para criar uma instancia
-    public Tweet(String texto, String autor, Date data){
+    public Tweet(String texto, Autor autor, Date data){
         this.data=data;
         this.texto=texto;
         this.autor=autor;
@@ -32,7 +34,7 @@ public class Tweet implements Serializable{
     /*
          Getters
         */
-    public String getAutor() {
+    public Autor getAutor() {
         return autor;
     }
 
@@ -51,7 +53,7 @@ public class Tweet implements Serializable{
         this.texto = texto;
     }
 
-    public void setAutor(String autor) {
+    public void setAutor(Autor autor) {
         this.autor = autor;
     }
 

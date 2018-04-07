@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
-    android:padding="@dimen/box_inset_layout_padding"
-    tools:context="com.example.angele.exercicio3.detalhes_tweet"
-    tools:deviceIds="wear">
+    android:orientation="vertical">
 
-    <FrameLayout
+    <TextView
+        android:id="@+id/detalhes.autor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/inner_frame_layout_padding"
-        app:boxedEdges="all">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/detalhes.email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/detalhes.telefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:onClick="onClick"
+        android:text="TextView" />
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world" />
+    <TextView
+        android:id="@+id/detalhes.texto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
 
-    </FrameLayout>
-</android.support.wear.widget.BoxInsetLayout>
+    <TextView
+        android:id="@+id/detalhes_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="Voltar"
+        android:text="Voltar" />
+</LinearLayout>

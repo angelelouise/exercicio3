@@ -2,6 +2,7 @@ package com.example.angele.exercicio3;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,10 +22,10 @@ import java.util.List;
 public class MainActivity extends Activity {
     //private ArrayList<String> tweets = new ArrayList<>();
     //private ArrayAdapter<String> adapter;
-
     private ArrayList<Tweet> tweets = new ArrayList<>();
     //private ArrayAdapter<Tweet> adapter;
     private MeuAdapter adapter; //implementando um adapter customizado
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Log.d("ciclovida", "onCreate");
 
+
         if(savedInstanceState != null){
             //tweets = (ArrayList<String>) savedInstanceState.getSerializable("tweets");
             tweets = (ArrayList<Tweet>) savedInstanceState.getSerializable("tweets");
@@ -46,7 +49,7 @@ public class MainActivity extends Activity {
         ListView tweetlogs = (ListView) findViewById(R.id.list_log_twt);
         //fazendo a ligação da lista criada ao adapter (this, estilo da lista, arraylist)
         //adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, tweets);
-        adapter = new MeuAdapter(getApplicationContext(),tweets);//utilizando meu adapter, precisa do contexto e da lista de arrays
+        adapter = new MeuAdapter(MainActivity.this,tweets);//utilizando meu adapter, precisa do contexto e da lista de arrays
         //fazendo a conexão do listview ao adapter
         tweetlogs.setAdapter(adapter);
         //listener para cliques
@@ -54,10 +57,15 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Tweet tweetSelecionado = tweets.get(i);
-                @SuppressLint("WrongConstant") Toast toast = Toast.makeText(MainActivity.this, "Item Selecionado:"+tweetSelecionado,1);
-                toast.show();
+                //@SuppressLint("WrongConstant") Toast toast = Toast.makeText(MainActivity.this, "Item Selecionado:"+tweetSelecionado,1);
+                //toast.show();
+                Intent intent = new Intent(MainActivity.this, detalhes_tweet.class);
+                intent.putExtra( Tweet.TWEET_INFO, (Serializable) tweetSelecionado);
+                startActivity(intent);
+
             }
         });
+
     }
     /*
     Método para recuperar dados no momento que o android destroy a aplicação
@@ -140,7 +148,8 @@ public class MainActivity extends Activity {
         //Pegando o conteúdo digitado
         String tweet = tweettext.getText().toString();
 
-        Tweet twt = new Tweet(tweet,"Angele", new Date());
+        Autor autor = new Autor("Angele","88888888","angelealst@hotmail.com");
+        Tweet twt = new Tweet(tweet,autor, new Date());
 
         //Adicionando a lista
         tweets.add(twt);
